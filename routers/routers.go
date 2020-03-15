@@ -22,6 +22,6 @@ func StartHttpServer(port int) {
 
 	}
 	//err := router.Run(fmt.Sprintf("%s:%d"),"0.0.0.0", port)
-	err := router.Run(fmt.Sprintf("%s:%d", "localhost", port))
+	err := router.Run(fmt.Sprintf("%s:%d", "0.0.0.0", port))
 	fmt.Println(err)
 }
