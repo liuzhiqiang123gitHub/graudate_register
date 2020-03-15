@@ -18,7 +18,7 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	routers.StartHttpServer(18081)
+	routers.StartHttpServer(9370)
 	//res, err := redisUtil.Get("123")
 	//if res == "" && err != nil {
 	//	fmt.Println(err)
