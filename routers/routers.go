@@ -18,7 +18,7 @@ func StartHttpServer(port int) {
 		//用户找回密码,暂时使用邮箱
 		regis.POST("/get_password_by_email", views.GetPasswordByEmail)
 		//用于请求验证码
-		regis.GET("/get_validate_code", views.GetValidateCode)
+		regis.POST("/get_validate_code", views.GetValidateCode)
 
 	}
 	//err := router.Run(fmt.Sprintf("%s:%d"),"0.0.0.0", port)
