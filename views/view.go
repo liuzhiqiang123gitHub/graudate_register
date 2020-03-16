@@ -12,12 +12,12 @@ import (
 )
 
 type GetRegistratorReq struct {
-	Email        string `form:"email" json:"email" bind:"required"`
+	Email        string `form:"email" json:"email" binding:"required"`
 	Phone        string `form:"phone" json:"phone"`
-	Password     string `form:"password" json:"password" bind:"required"`
-	NickName     string `form:"nickname" json:"nickname" bind:"required"`
+	Password     string `form:"password" json:"password" binding:"required"`
+	NickName     string `form:"nickname" json:"nickname" binding:"required"`
 	Age          int    `form:"age" json:"age" bind:"required"`
-	ValidateCode string `form:"validate_code" json:"validate_code" bind:"required"`
+	ValidateCode string `form:"validate_code" json:"validate_code" binding:"required"`
 }
 
 type GetRegistratorRsp struct {
@@ -91,9 +91,9 @@ func UserRegistrator(c *gin.Context) {
 }
 
 type GetPasswordReq struct {
-	Mail         string `form:"mail" json:"mail" bind:"required"`
-	ValidateCode string `form:"validate_code" json:"validate_code" bind:"required"`
-	Password     string `form:"password" json:"password" bind:"required"`
+	Mail         string `form:"mail" json:"mail" binding:"required"`
+	ValidateCode string `form:"validate_code" json:"validate_code" binding:"required"`
+	Password     string `form:"password" json:"password" binding:"required"`
 }
 type GetPasswordRsp struct {
 	Status      string      `json:"status"`
@@ -122,7 +122,7 @@ func GetPasswordByEmail(c *gin.Context) {
 }
 
 type GetValidateReq struct {
-	Mail string `form:"mail" json:"mail" bind:"required"`
+	Mail string `form:"mail" json:"mail" binding:"required"`
 }
 type GetValidateData struct {
 }
