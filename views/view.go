@@ -16,7 +16,7 @@ type GetRegistratorReq struct {
 	Phone        string `form:"phone" json:"phone"`
 	Password     string `form:"password" json:"password" binding:"required"`
 	NickName     string `form:"nickname" json:"nickname" binding:"required"`
-	Age          int    `form:"age" json:"age" bind:"required"`
+	Age          int    `form:"age" json:"age" binding:"required"`
 	ValidateCode string `form:"validate_code" json:"validate_code" binding:"required"`
 }
 
