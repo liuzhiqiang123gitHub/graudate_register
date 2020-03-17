@@ -59,8 +59,8 @@ func UserRegistrator(mail, phone, password, nickname, validateCode string, age i
 		fmt.Printf("数据库异常%s", mail)
 		return err
 	} else if err == nil {
-		fmt.Printf("用户已经存在%s", mail)
-		return errors.New("用户已经存在")
+		fmt.Printf("邮箱已被注册%s", mail)
+		return errors.New("邮箱已被注册")
 	}
 	//验证phone
 	if phone != "" {
@@ -69,9 +69,18 @@ func UserRegistrator(mail, phone, password, nickname, validateCode string, age i
 			fmt.Printf("数据库异常%s", phone)
 			return err
 		} else if err == nil {
-			fmt.Printf("用户已经存在%s", phone)
-			return errors.New("用户已经存在")
+			fmt.Printf("手机号已被注册%s", phone)
+			return errors.New("手机号已被注册")
 		}
+	}
+	//验证用户名
+	err = userInfo.GetUserByNick(nickname)
+	if err != nil && err != gorm.ErrRecordNotFound {
+		fmt.Printf("数据库异常%s", nickname)
+		return err
+	} else if err == nil {
+		fmt.Printf("用户名已存在%s", nickname)
+		return errors.New("用户名已存在")
 	}
 	//查询验证码是否过期
 	_, err = redisUtil.Get(mail)
@@ -79,14 +88,6 @@ func UserRegistrator(mail, phone, password, nickname, validateCode string, age i
 	if err != nil {
 		fmt.Printf("验证码已过期%s", mail)
 		return errors.New("验证码已过期")
-	}
-	err = userInfo.GetUserByNick(nickname)
-	if err != nil && err != gorm.ErrRecordNotFound {
-		fmt.Printf("数据库异常%s", nickname)
-		return err
-	} else if err == nil {
-		fmt.Printf("用户已经存在%s", nickname)
-		return errors.New("用户已经存在")
 	}
 
 	//数据正常,进行注册

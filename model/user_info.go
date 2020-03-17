@@ -51,7 +51,7 @@ func (userInfo *UserInfoModel) GetUserByNick(nick string) error {
 	return dbutil.RegistratorDBPool.Table(GetName()).Where("nickname=?", nick).Last(&userInfo).Error
 }
 
-//根据昵称查询
+//根据手机号查询
 func (userInfo *UserInfoModel) GetUserByPhone(phone string) error {
 	return dbutil.RegistratorDBPool.Table(GetName()).Where("phone=?", phone).Last(&userInfo).Error
 }
