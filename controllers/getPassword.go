@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/jinzhu/gorm"
+	basic "graduate_registrator/const"
 	"graduate_registrator/model"
 	"graduate_registrator/utils/email"
 	"graduate_registrator/utils/redisUtil"
@@ -60,7 +61,7 @@ func UserRegistrator(mail, phone, password, nickname, validateCode string, age i
 		return err
 	} else if err == nil {
 		fmt.Printf("邮箱已被注册%s", mail)
-		return errors.New("邮箱已被注册")
+		return errors.New(basic.EmailHasBeenExisted)
 	}
 	//验证phone
 	if phone != "" {
@@ -70,24 +71,24 @@ func UserRegistrator(mail, phone, password, nickname, validateCode string, age i
 			return err
 		} else if err == nil {
 			fmt.Printf("手机号已被注册%s", phone)
-			return errors.New("手机号已被注册")
+			return errors.New(basic.PhoneHasBeenExisted)
 		}
 	}
-	//验证用户名
+	//验证游戏昵称
 	err = userInfo.GetUserByNick(nickname)
 	if err != nil && err != gorm.ErrRecordNotFound {
 		fmt.Printf("数据库异常%s", nickname)
 		return err
 	} else if err == nil {
 		fmt.Printf("用户名已存在%s", nickname)
-		return errors.New("用户名已存在")
+		return errors.New(basic.NicknameHasBeenExisted)
 	}
 	//查询验证码是否过期
 	_, err = redisUtil.Get(mail)
 	fmt.Println(err)
 	if err != nil {
 		fmt.Printf("验证码已过期%s", mail)
-		return errors.New("验证码已过期")
+		return errors.New(basic.ValidationCodeExp)
 	}
 
 	//数据正常,进行注册

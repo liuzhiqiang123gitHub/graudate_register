@@ -19,7 +19,7 @@ func InitRedis(addr string) (err error) {
 
 //插入数据
 func Set(key, value interface{}, exp uint) error {
-	_, err := RedisConn.Do("SET", "mykey", "superWang", "EX", exp)
+	_, err := RedisConn.Do("SET", key, value, "EX", exp)
 	if err != nil {
 		fmt.Println("redis set failed:", err)
 		return err

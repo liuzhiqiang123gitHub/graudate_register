@@ -28,13 +28,13 @@ type GetRegistratorRsp struct {
 
 func UserRegistrator(c *gin.Context) {
 	req := &GetRegistratorReq{}
-	rsp := GetRegistratorRsp{}
+	//rsp := GetRegistratorRsp{}
 	if err := c.Bind(req); err != nil {
 		fmt.Printf("%+v", req)
 		err := errors.New("invalid params")
 		//clog.Logger.Warning("LoginController failed to %v", err.Error())
 		fmt.Printf("UserRegistrator failed to %v", err.Error())
-		httputils.ResponseError(c, rsp, err.Error())
+		httputils.ResponseError(c, "", err.Error())
 		return
 	}
 	//验证邮箱
@@ -42,50 +42,52 @@ func UserRegistrator(c *gin.Context) {
 	if !isEmail {
 		fmt.Println("邮箱格式不合法")
 		err := errors.New("邮箱不合法")
-		httputils.ResponseError(c, rsp, err.Error())
+		httputils.ResponseError(c, "", err.Error())
 		return
 	} else if len(req.Email) < 8 {
 		fmt.Println("该邮箱不能注册")
 		err := errors.New("该邮箱不能注册")
-		httputils.ResponseError(c, rsp, err.Error())
+		httputils.ResponseError(c, "", err.Error())
 		return
 	}
 	//验证phone
-	isMobile := email.VerifyMobileFormat(req.Phone)
-	if !isMobile {
-		fmt.Println("手机号不合法")
-		err := errors.New("手机号不合法")
-		httputils.ResponseError(c, rsp, err.Error())
-		return
+	if req.Phone != "" {
+		isMobile := email.VerifyMobileFormat(req.Phone)
+		if !isMobile {
+			fmt.Println("手机号不合法")
+			err := errors.New("手机号不合法")
+			httputils.ResponseError(c, "", err.Error())
+			return
+		}
 	}
 	//验证验证码格式是否有效
 	if len(req.ValidateCode) != 6 {
 		fmt.Println("验证码格式无效")
 		err := errors.New("验证码格式无效")
-		httputils.ResponseError(c, rsp, err.Error())
+		httputils.ResponseError(c, "", err.Error())
 		return
 	}
 	//验证密码
 	if len(req.Password) < 8 {
 		fmt.Println("密码少于8位")
 		err := errors.New("密码少于8位")
-		httputils.ResponseError(c, rsp, err.Error())
+		httputils.ResponseError(c, "", err.Error())
 		return
 	}
 	//验证年龄
 	if req.Age < 15 {
 		fmt.Println("根据您的年龄,不能注册")
 		err := errors.New("根据您的年龄,不能注册")
-		httputils.ResponseError(c, rsp, err.Error())
+		httputils.ResponseError(c, "", err.Error())
 		return
 	}
 	err := controllers.UserRegistrator(req.Email, req.Phone, req.Password, req.NickName, req.ValidateCode, req.Age)
 	if err != nil {
 		fmt.Println(err)
-		httputils.ResponseError(c, rsp, err.Error())
+		httputils.ResponseError(c, "", err.Error())
 		return
 	}
-	httputils.ResponseOk(c, rsp, "")
+	httputils.ResponseOk(c, "", "")
 	return
 
 }
@@ -109,12 +111,12 @@ func GetPasswordByEmail(c *gin.Context) {
 		err := errors.New("invalid params")
 		//clog.Logger.Warning("LoginController failed to %v", err.Error())
 		fmt.Printf("GetPasswordByEmail failed to %v", err.Error())
-		httputils.ResponseError(c, rsp, err.Error())
+		httputils.ResponseError(c, "", err.Error())
 		return
 	}
 	err := controllers.GetPasswordByEmail(nil, req.Mail, req.ValidateCode, req.Password)
 	if err != nil {
-		httputils.ResponseError(c, rsp, err.Error())
+		httputils.ResponseError(c, "", err.Error())
 	}
 	httputils.ResponseOk(c, rsp, "")
 	fmt.Printf("LoginController req=%+v ", req)
@@ -140,7 +142,7 @@ func GetValidateCode(c *gin.Context) {
 		err := errors.New("invalid params")
 		//clog.Logger.Warning("LoginController failed to %v", err.Error())
 		fmt.Printf("GetPasswordByEmail failed to %v", err.Error())
-		httputils.ResponseError(c, rsp, err.Error())
+		httputils.ResponseError(c, "", err.Error())
 		return
 	}
 	fmt.Printf("LoginController req=%v ", req)
@@ -149,7 +151,7 @@ func GetValidateCode(c *gin.Context) {
 	if !isEmail {
 		fmt.Println("邮箱不合法")
 		err := errors.New("邮箱不合法")
-		httputils.ResponseError(c, rsp, err.Error())
+		httputils.ResponseError(c, "", err.Error())
 	}
 	strCode := utils.GenValidateCode(6)
 	//向该用户发送邮件
@@ -163,7 +165,7 @@ func GetValidateCode(c *gin.Context) {
 	err = redisUtil.Delete(req.Mail)
 	if err != nil {
 		fmt.Println("删除key失败")
-		httputils.ResponseError(c, rsp, err.Error())
+		httputils.ResponseError(c, "", err.Error())
 	}
 	var value = fmt.Sprintf("%s_%s", req.Mail, strCode)
 	err = redisUtil.Set(req.Mail, value, 300)
