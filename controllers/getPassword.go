@@ -34,6 +34,12 @@ func GetPasswordByEmail(ctx context.Context, mail, validateCode, password string
 	if res.(string) == "" && err != nil {
 		return errors.New("验证码或已失效")
 	}
+	fmt.Println(res.(string))
+	validateC := Substring(res.(string), 18, len(res.(string)))
+	fmt.Println(validateC)
+	if validateCode != validateC {
+		return errors.New("验证码或已失效")
+	}
 	var userInfo model.UserInfoModel
 	err = userInfo.GetUserByEmail(mail)
 	if err != nil && err != gorm.ErrRecordNotFound {
@@ -103,4 +109,18 @@ func UserRegistrator(mail, phone, password, nickname, validateCode string, age i
 		return err
 	}
 	return nil
+}
+func Substring(source string, start int, end int) string {
+	var r = []rune(source)
+	length := len(r)
+
+	if start < 0 || end > length || start > end {
+		return ""
+	}
+
+	if start == 0 && end == length {
+		return source
+	}
+
+	return string(r[start:end])
 }

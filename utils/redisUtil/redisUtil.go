@@ -29,8 +29,8 @@ func Set(key, value interface{}, exp uint) error {
 
 //Get
 func Get(key interface{}) (resStr interface{}, err error) {
-	username, err := redis.String(RedisConn.Do("GET", key))
-	return username, err
+	res, err := redis.String(RedisConn.Do("GET", key))
+	return res, err
 }
 
 //Del
