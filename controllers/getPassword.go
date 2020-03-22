@@ -32,7 +32,7 @@ func GetPasswordByEmail(ctx context.Context, mail, validateCode, password string
 	//	return
 	//}
 	if res.(string) == "" && err != nil {
-		return
+		return errors.New("验证码或已失效")
 	}
 	var userInfo model.UserInfoModel
 	err = userInfo.GetUserByEmail(mail)
@@ -41,7 +41,7 @@ func GetPasswordByEmail(ctx context.Context, mail, validateCode, password string
 		return
 	} else if err != nil && err == gorm.ErrRecordNotFound {
 		fmt.Println("用户不存在")
-		return
+		return errors.New("用户不存在")
 	}
 	//更新用户信息
 	err = userInfo.UpdateInfo(mail, password)
@@ -87,7 +87,7 @@ func UserRegistrator(mail, phone, password, nickname, validateCode string, age i
 	_, err = redisUtil.Get(mail)
 	fmt.Println(err)
 	if err != nil {
-		fmt.Printf("验证码已过期%s", mail)
+		fmt.Printf("验证码或已过期%s", mail)
 		return errors.New(basic.ValidationCodeExp)
 	}
 

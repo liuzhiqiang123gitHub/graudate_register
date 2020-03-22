@@ -105,7 +105,7 @@ type GetPasswordRsp struct {
 
 func GetPasswordByEmail(c *gin.Context) {
 	req := &GetPasswordReq{}
-	rsp := GetPasswordRsp{}
+	//rsp := GetPasswordRsp{}
 	if err := c.Bind(req); err != nil {
 		fmt.Printf("%+v", req)
 		err := errors.New("invalid params")
@@ -117,8 +117,9 @@ func GetPasswordByEmail(c *gin.Context) {
 	err := controllers.GetPasswordByEmail(nil, req.Mail, req.ValidateCode, req.Password)
 	if err != nil {
 		httputils.ResponseError(c, "", err.Error())
+		return
 	}
-	httputils.ResponseOk(c, rsp, "")
+	httputils.ResponseOk(c, "", "")
 	fmt.Printf("LoginController req=%+v ", req)
 	return
 }
@@ -136,7 +137,7 @@ type GetValidateRsp struct {
 
 func GetValidateCode(c *gin.Context) {
 	req := &GetValidateReq{}
-	rsp := GetValidateRsp{}
+	//rsp := GetValidateRsp{}
 	if err := c.Bind(req); err != nil {
 		fmt.Printf("%+v", req)
 		err := errors.New("invalid params")
@@ -156,7 +157,7 @@ func GetValidateCode(c *gin.Context) {
 	strCode := utils.GenValidateCode(6)
 	//向该用户发送邮件
 	body := fmt.Sprintf("您的验证码为:%s,5分钟之后过期,如不是本人操作请忽略。", strCode)
-	err := email.StartSendEmail(req.Mail, "修改密码", body)
+	err := email.StartSendEmail(req.Mail, "至强科技", body)
 	if err != nil {
 		fmt.Printf("发送邮件失败%s", req.Mail)
 		return
@@ -173,6 +174,6 @@ func GetValidateCode(c *gin.Context) {
 		fmt.Println("写入redis失败")
 		return
 	}
-	httputils.ResponseOk(c, rsp, "")
+	httputils.ResponseOk(c, "", "")
 	return
 }
