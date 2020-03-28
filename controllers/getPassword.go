@@ -17,9 +17,14 @@ func GetPasswordByEmail(ctx context.Context, mail, validateCode, password string
 		fmt.Println("邮箱不合法")
 		return errors.New("邮箱不合法")
 	}
+
 	if len(validateCode) != 6 {
 		fmt.Println("验证码不合法")
 		return errors.New("验证码不合法")
+	}
+	if len(password) < 8 {
+		fmt.Println("密码不能小于8位")
+		return errors.New("密码不能小于8位")
 	}
 	var key = mail
 	//查询验证码是否过期

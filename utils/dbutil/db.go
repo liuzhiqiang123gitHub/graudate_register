@@ -5,7 +5,7 @@ import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
-	"graduate_registrator/config"
+	config "graduate_registrator/utils/conf"
 )
 
 var (
@@ -56,10 +56,10 @@ func InitGormDbPool(config *config.MysqlConfig, setLog bool) (err error) {
 
 	return nil
 }
-func InitDb() error {
+func InitDb(dbConf config.Configure) error {
 	mysqlConf := &config.MysqlConfig{
-		MysqlConn:            fmt.Sprintf("%s:%s@(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local", "root", "Liuzhi19972123", "148.70.248.33", 3306, "graduate_project"),
-		MysqlConnectPoolSize: 10,
+		MysqlConn:            dbConf.MysqlSetting["db"].MysqlConn,
+		MysqlConnectPoolSize: dbConf.MysqlSetting["db"].MysqlConnectPoolSize,
 	}
 	err := InitGormDbPool(mysqlConf, true)
 	if err != nil {

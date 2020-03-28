@@ -3,14 +3,16 @@ package redisUtil
 import (
 	"fmt"
 	"github.com/garyburd/redigo/redis"
+	config "graduate_registrator/utils/conf"
 )
 
 var (
 	RedisConn redis.Conn
 )
 
-func InitRedis(addr string) (err error) {
-	RedisConn, err = redis.Dial("tcp", "148.70.248.33:6379", redis.DialPassword("liuzhi19972123"))
+func InitRedis(redisConf config.Configure) (err error) {
+	//fmt.Printf(" %+v", redisConf)
+	RedisConn, err = redis.Dial("tcp", redisConf.RedisSetting["tmp"].RedisConn, redis.DialPassword(redisConf.RedisSetting["tmp"].RedisPasswd))
 	if err != nil {
 		fmt.Println("Connect to redis error", err)
 	}
