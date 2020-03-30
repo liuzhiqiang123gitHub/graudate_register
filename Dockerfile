@@ -5,9 +5,9 @@ ENV APP_ENV $app_env
 
 COPY . /go/src/backend/graduate_registrator
 WORKDIR /go/src/backend/graduate_registrator
-
-RUN go build
 RUN export GOPROXY="http://goproxy.cn"
+RUN go build
+
 CMD if [ ${APP_ENV} = production ]; \
         then \
         app; \
