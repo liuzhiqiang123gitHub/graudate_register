@@ -7,9 +7,11 @@ import (
 	"graduate_registrator/utils/dbutil"
 	"graduate_registrator/utils/etcd"
 	"graduate_registrator/utils/redisUtil"
+	"runtime"
 )
 
 func main() {
+	runtime.GOMAXPROCS(runtime.NumCPU())
 	//初始化etcd
 	etcdIni.InitEtcd()
 	//从etcd加载配置

@@ -9,6 +9,7 @@ import (
 )
 
 func InitEtcd() {
+
 	etcdConfig := clientv3.Config{
 		Endpoints:   []string{"148.70.248.33:2379"},
 		DialTimeout: 10 * time.Second,

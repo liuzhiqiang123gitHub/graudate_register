@@ -68,16 +68,16 @@ func UserRegistrator(c *gin.Context) {
 		return
 	}
 	//验证密码
-	if len(req.Password) < 8 {
+	if len(req.Password) < 8 || len(req.Password) > 18 {
 		fmt.Println("密码少于8位")
-		err := errors.New("密码少于8位")
+		err := errors.New("密码长度8-18位")
 		httputils.ResponseError(c, "", err.Error())
 		return
 	}
 	//验证年龄
-	if req.Age < 15 {
+	if req.Age < 15 || req.Age < 110 {
 		fmt.Println("根据您的年龄,不能注册")
-		err := errors.New("根据您的年龄,不能注册")
+		err := errors.New("该年龄段不能注册")
 		httputils.ResponseError(c, "", err.Error())
 		return
 	}
