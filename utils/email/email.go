@@ -19,7 +19,7 @@ func SendMail(mailTo string, subject string, body string) error {
 	port, _ := strconv.Atoi(mailConn["port"]) //转换端口类型为int
 
 	m := gomail.NewMessage()
-	//m.SetHeader("From","至强科技" + mailConn["user"] )  //这种方式可以添加别名，即“XD Game”， 也可以直接用<code>m.SetHeader("From",mailConn["user"])</code> 读者可以自行实验下效果
+	//m.SetHeader("From","字节飞舞计算机系统有限公司" + mailConn["user"] )  //这种方式可以添加别名，即“XD Game”， 也可以直接用<code>m.SetHeader("From",mailConn["user"])</code> 读者可以自行实验下效果
 	m.SetHeader("From", mailConn["user"]) //这种方式可以添加别名，即“XD Game”， 也可以直接用<code>m.SetHeader("From",mailConn["user"])</code> 读者可以自行实验下效果
 	m.SetHeader("To", mailTo)             //发送给多个用户
 	m.SetHeader("Subject", subject)       //设置邮件主题

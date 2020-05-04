@@ -157,7 +157,7 @@ func GetValidateCode(c *gin.Context) {
 	strCode := utils.GenValidateCode(6)
 	//向该用户发送邮件
 	body := fmt.Sprintf("您的验证码为:%s,5分钟之后过期,如不是本人操作请忽略。", strCode)
-	err := email.StartSendEmail(req.Mail, "至强科技", body)
+	err := email.StartSendEmail(req.Mail, "字节飞舞计算机系统有限公司", body)
 	if err != nil {
 		fmt.Printf("发送邮件失败%s", req.Mail)
 		return
