@@ -238,7 +238,7 @@ func BuyEquipment(c *gin.Context) {
 		return
 	}
 	fmt.Printf("BuyEquipment req=%v ", req)
-	err := controllers.Recharge(req.CouponNum, req.Email)
+	err := controllers.BuyEquipment(req.CouponNum, req.WeaponId, req.Email)
 	if err != nil {
 		err := errors.New("购买失败，请稍后重试")
 		//clog.Logger.Warning("LoginController failed to %v", err.Error())
