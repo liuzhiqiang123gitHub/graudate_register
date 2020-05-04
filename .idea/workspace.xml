@@ -2,12 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a412e8f-b1ab-4274-ac67-1152575368ae" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/controllers/deal_trade.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/user_capital.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/user_weapon.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/weapon_info.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/etcd/etcd.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/etcd/etcd.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graduate_registrator.exe" beforeDir="false" afterPath="$PROJECT_DIR$/graduate_registrator.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/routers.go" beforeDir="false" afterPath="$PROJECT_DIR$/routers/routers.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/view.go" beforeDir="false" afterPath="$PROJECT_DIR$/views/view.go" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,18 +50,6 @@
       <recent name="D:\goProject\src\graduate_registrator" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="RunManager">
     <configuration name="go build graduate_registrator" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="graduate_registrator" />
@@ -82,16 +74,46 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
+    <environment>
+      <map>
+        <entry key="GOPROXY" value="https://mirrors.aliyun.com/goproxy/" />
+      </map>
+    </environment>
     <proxy>https://mirrors.aliyun.com/goproxy/</proxy>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="733" y="347" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1588600144091">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="733" y="347" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1588600144091" />
+    <state width="1877" height="379" key="GridCell.Tab.0.bottom" timestamp="1588582869110">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="379" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1588582869110" />
+    <state width="1877" height="379" key="GridCell.Tab.0.center" timestamp="1588582869110">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="379" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1588582869110" />
+    <state width="1877" height="379" key="GridCell.Tab.0.left" timestamp="1588582869109">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="379" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1588582869109" />
+    <state width="1877" height="379" key="GridCell.Tab.0.right" timestamp="1588582869110">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="379" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1588582869110" />
+    <state x="669" y="256" width="672" height="678" key="search.everywhere.popup" timestamp="1588599607984">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="669" y="256" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1588599607984" />
   </component>
 </project>

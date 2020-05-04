@@ -21,7 +21,21 @@ func StartHttpServer(port int) {
 		regis.POST("/get_validate_code", views.GetValidateCode)
 
 	}
-	//err := router.Run(fmt.Sprintf("%s:%d"),"0.0.0.0", port)
+	financial := router.Group("/financial")
+	{
+		//充值
+		financial.POST("/recharge", views.Recharge)
+		//购买装备
+		financial.POST("/buy_equipment", views.BuyEquipment)
+		//查询用户的装备
+		financial.GET("/get_equipments_By_email", views.GetEquipments)
+		//查询用户未拥有的装备
+		financial.GET("/get_without_equipments_by_email", views.GetWithoutEquipments)
+		//查询所有装备
+		financial.GET("/get_equipments", views.GetAllEquipments)
+		//查询用户金融信息,比如点券
+		financial.GET("/get_coupon_by_email", views.GetCoupon)
+	}
 	err := router.Run(fmt.Sprintf("%s:%d", "0.0.0.0", port))
 	fmt.Println(err)
 }

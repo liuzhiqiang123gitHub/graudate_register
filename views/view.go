@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"graduate_registrator/controllers"
+	"graduate_registrator/model"
 	"graduate_registrator/utils"
 	"graduate_registrator/utils/email"
 	"graduate_registrator/utils/httputils"
@@ -175,5 +176,215 @@ func GetValidateCode(c *gin.Context) {
 		return
 	}
 	httputils.ResponseOk(c, "", "")
+	return
+}
+
+type GetRechargeReq struct {
+	Email       string `form:"email" json:"email" binding:"required"`
+	RechargeNum int    `form:"recharge_num" json:"recharge_num" binding:"required"`
+}
+
+type GetRechargeRsp struct {
+	Status      string `json:"status"`
+	Description string `json:"description"`
+	Data        string `json:"data"`
+}
+
+func Recharge(c *gin.Context) {
+	req := &GetRechargeReq{}
+	//rsp := GetValidateRsp{}
+	if err := c.Bind(req); err != nil {
+		fmt.Printf("%+v", req)
+		err := errors.New("invalid params")
+		//clog.Logger.Warning("LoginController failed to %v", err.Error())
+		fmt.Printf("Recharge failed to %v", err.Error())
+		httputils.ResponseError(c, "", err.Error())
+		return
+	}
+	fmt.Printf("recharge req=%v ", req)
+	err := controllers.Recharge(req.RechargeNum, req.Email)
+	if err != nil {
+		err := errors.New("充值失败")
+		//clog.Logger.Warning("LoginController failed to %v", err.Error())
+		fmt.Printf("Recharge failed to %v", err.Error())
+		httputils.ResponseError(c, "", err.Error())
+		return
+	}
+	httputils.ResponseOk(c, "", "")
+	return
+}
+
+type GetBuyEquipmentReq struct {
+	Email     string `form:"email" json:"email" binding:"required"`
+	CouponNum int    `form:"coupon_num" json:"coupon_num" binding:"required"`
+	WeaponId  int64  `form:"weapon_id" json:"weapon_id" binding:"required"`
+}
+
+type GetBuyEquipmentRsp struct {
+	Status      string `json:"status"`
+	Description string `json:"description"`
+	Data        string `json:"data"`
+}
+
+func BuyEquipment(c *gin.Context) {
+	req := &GetBuyEquipmentReq{}
+	//rsp := GetValidateRsp{}
+	if err := c.Bind(req); err != nil {
+		fmt.Printf("%+v", req)
+		err := errors.New("invalid params")
+		//clog.Logger.Warning("LoginController failed to %v", err.Error())
+		fmt.Printf("BuyEquipment failed to %v", err.Error())
+		httputils.ResponseError(c, "", err.Error())
+		return
+	}
+	fmt.Printf("BuyEquipment req=%v ", req)
+	err := controllers.Recharge(req.CouponNum, req.Email)
+	if err != nil {
+		err := errors.New("购买失败，请稍后重试")
+		//clog.Logger.Warning("LoginController failed to %v", err.Error())
+		fmt.Printf("BuyEquipment failed to %v", err.Error())
+		httputils.ResponseError(c, "", err.Error())
+		return
+	}
+	httputils.ResponseOk(c, "", "")
+	return
+}
+
+type GetAllEquipmentsReq struct {
+	Email string `form:"email" json:"email" binding:"required"`
+}
+
+type GetAllEquipmentsRsp struct {
+	Status      string                `json:"status"`
+	Description string                `json:"description"`
+	Data        model.WeaponModelList `json:"data"`
+}
+
+func GetAllEquipments(c *gin.Context) {
+	req := &GetAllEquipmentsReq{}
+	//rsp := GetValidateRsp{}
+	if err := c.Bind(req); err != nil {
+		fmt.Printf("%+v", req)
+		err := errors.New("invalid params")
+		//clog.Logger.Warning("LoginController failed to %v", err.Error())
+		fmt.Printf("GetAllEquipments failed to %v", err.Error())
+		httputils.ResponseError(c, "", err.Error())
+		return
+	}
+	fmt.Printf("BuyEquipment req=%v ", req)
+	data, err := controllers.GetAllEquipments(req.Email)
+	if err != nil {
+		err := errors.New("获得装备失败，请稍后重试")
+		//clog.Logger.Warning("LoginController failed to %v", err.Error())
+		fmt.Printf("GetAllEquipments failed to %v", err.Error())
+		httputils.ResponseError(c, "", err.Error())
+		return
+	}
+	httputils.ResponseOk(c, data, "")
+	return
+}
+
+type GetCouponByEmailReq struct {
+	Email string `form:"email" json:"email" binding:"required"`
+}
+
+type GetCouponByEmailRsp struct {
+	Status      string                 `json:"status"`
+	Description string                 `json:"description"`
+	Data        model.UserCapitalModel `json:"data"`
+}
+
+//获得点券信息
+func GetCoupon(c *gin.Context) {
+	req := &GetCouponByEmailReq{}
+	//rsp := GetValidateRsp{}
+	if err := c.Bind(req); err != nil {
+		fmt.Printf("%+v", req)
+		err := errors.New("invalid params")
+		//clog.Logger.Warning("LoginController failed to %v", err.Error())
+		fmt.Printf("GetCoupon failed to %v", err.Error())
+		httputils.ResponseError(c, "", err.Error())
+		return
+	}
+	fmt.Printf("BuyEquipment req=%v ", req)
+	err, data := controllers.GetCoupon(req.Email)
+	if err != nil {
+		err := errors.New("获得用户金融账户失败，请稍后重试")
+		//clog.Logger.Warning("LoginController failed to %v", err.Error())
+		fmt.Printf("GetAllEquipments failed to %v", err.Error())
+		httputils.ResponseError(c, "", err.Error())
+		return
+	}
+	httputils.ResponseOk(c, data, "")
+	return
+}
+
+type GetEquipmentsReq struct {
+	Email string `form:"email" json:"email" binding:"required"`
+}
+
+type GetEquipmentsRsp struct {
+	Status      string                    `json:"status"`
+	Description string                    `json:"description"`
+	Data        model.UserWeaponModelList `json:"data"`
+}
+
+//获得已有装备信息
+func GetEquipments(c *gin.Context) {
+	req := &GetCouponByEmailReq{}
+	//rsp := GetValidateRsp{}
+	if err := c.Bind(req); err != nil {
+		fmt.Printf("%+v", req)
+		err := errors.New("invalid params")
+		//clog.Logger.Warning("LoginController failed to %v", err.Error())
+		fmt.Printf("GetEquipments failed to %v", err.Error())
+		httputils.ResponseError(c, "", err.Error())
+		return
+	}
+	fmt.Printf("BuyEquipment req=%v ", req)
+	err, data := controllers.GetEquipments(req.Email)
+	if err != nil {
+		err := errors.New("获得已有装备失败，请稍后重试")
+		//clog.Logger.Warning("LoginController failed to %v", err.Error())
+		fmt.Printf("GetAllEquipments failed to %v", err.Error())
+		httputils.ResponseError(c, "", err.Error())
+		return
+	}
+	httputils.ResponseOk(c, data, "")
+	return
+}
+
+type GetWithoutEquipmentsReq struct {
+	Email string `form:"email" json:"email" binding:"required"`
+}
+
+type GetWithoutEquipmentsRsp struct {
+	Status      string                    `json:"status"`
+	Description string                    `json:"description"`
+	Data        model.UserWeaponModelList `json:"data"`
+}
+
+//获得已有装备信息
+func GetWithoutEquipments(c *gin.Context) {
+	req := &GetWithoutEquipmentsReq{}
+	//rsp := GetValidateRsp{}
+	if err := c.Bind(req); err != nil {
+		fmt.Printf("%+v", req)
+		err := errors.New("invalid params")
+		//clog.Logger.Warning("LoginController failed to %v", err.Error())
+		fmt.Printf("GetWithoutEquipments failed to %v", err.Error())
+		httputils.ResponseError(c, "", err.Error())
+		return
+	}
+	fmt.Printf("BuyEquipment req=%v ", req)
+	err, data := controllers.GetWithoutEquipments(req.Email)
+	if err != nil {
+		err := errors.New("获得已有装备失败，请稍后重试")
+		//clog.Logger.Warning("LoginController failed to %v", err.Error())
+		fmt.Printf("GetAllEquipments failed to %v", err.Error())
+		httputils.ResponseError(c, "", err.Error())
+		return
+	}
+	httputils.ResponseOk(c, data, "")
 	return
 }
