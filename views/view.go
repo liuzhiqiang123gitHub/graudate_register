@@ -77,7 +77,7 @@ func UserRegistrator(c *gin.Context) {
 		return
 	}
 	//验证年龄
-	if req.Age < 15 || req.Age < 110 {
+	if req.Age < 15 || req.Age > 100 {
 		fmt.Println("根据您的年龄,不能注册")
 		err := errors.New("该年龄段不能注册")
 		httputils.ResponseError(c, "", err.Error())

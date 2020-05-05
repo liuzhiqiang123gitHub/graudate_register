@@ -3,13 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2a412e8f-b1ab-4274-ac67-1152575368ae" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/deal_trade.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/deal_trade.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graduate_registrator.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/user_capital.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/user_capital.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/user_info.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/user_info.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/user_weapon.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/user_weapon.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/routers.go" beforeDir="false" afterPath="$PROJECT_DIR$/routers/routers.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/modules.txt" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/modules.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/view.go" beforeDir="false" afterPath="$PROJECT_DIR$/views/view.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -95,22 +88,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="733" y="347" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1588600144091" />
-    <state width="1860" height="821" key="GridCell.Tab.0.bottom" timestamp="1588670882517">
+    <state width="1860" height="821" key="GridCell.Tab.0.bottom" timestamp="1588671483232">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="821" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1588670882517" />
-    <state width="1860" height="821" key="GridCell.Tab.0.center" timestamp="1588670882517">
+    <state width="1860" height="821" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1588671483232" />
+    <state width="1860" height="821" key="GridCell.Tab.0.center" timestamp="1588671483232">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="821" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1588670882517" />
-    <state width="1860" height="821" key="GridCell.Tab.0.left" timestamp="1588670882517">
+    <state width="1860" height="821" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1588671483232" />
+    <state width="1860" height="821" key="GridCell.Tab.0.left" timestamp="1588671483232">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="821" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1588670882517" />
-    <state width="1860" height="821" key="GridCell.Tab.0.right" timestamp="1588670882517">
+    <state width="1860" height="821" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1588671483232" />
+    <state width="1860" height="821" key="GridCell.Tab.0.right" timestamp="1588671483232">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="821" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1588670882517" />
+    <state width="1860" height="821" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1588671483232" />
     <state x="698" y="255" width="596" height="532" key="find.popup" timestamp="1588668432233">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
