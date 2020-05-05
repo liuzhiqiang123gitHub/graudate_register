@@ -23,6 +23,11 @@ type UserCapitalModel struct {
 func (ucm *UserCapitalModel) GetDb() *gorm.DB {
 	return dbutil.RegistratorDBPool.Table(UserCapitalTableName)
 }
+func (ucm *UserCapitalModel) Create(rechargeNum int, email string) error {
+	ucm.Email = email
+	ucm.Coupon = rechargeNum
+	return dbutil.RegistratorDBPool.Table(UserCapitalTableName).Create(ucm).Error
+}
 
 //查询信息
 func (ucm *UserCapitalModel) GetCouponByEmail(email string) (err error) {
@@ -33,12 +38,18 @@ func (ucm *UserCapitalModel) GetCouponByEmail(email string) (err error) {
 func (ucm *UserCapitalModel) RechargeByEmail(rechargeNum int, email string) (err error) {
 	//先查询再更新
 	err = ucm.GetCouponByEmail(email)
-	if err != nil {
+	if err != nil && err != gorm.ErrRecordNotFound {
 		fmt.Printf("GetCouponByEmail err ,err=%v", err)
 		return err
+	} else if err != nil && err == gorm.ErrRecordNotFound {
+		err = ucm.Create(rechargeNum, email)
+		if err != nil {
+			fmt.Printf("RechargeByEmail [err=%v]", err)
+			return err
+		}
 	}
 	oldNum := ucm.Coupon
-	var updateData map[string]int
+	updateData := make(map[string]int, 0)
 	updateData["coupon"] = oldNum + rechargeNum
 	return dbutil.RegistratorDBPool.Table(UserCapitalTableName).Update(updateData).Error
 }
@@ -48,7 +59,7 @@ func (ucm *UserCapitalModel) SubstanceCouponByEmail(substanceNum int, email stri
 	//先查询再更新
 	err = ucm.GetCouponByEmail(email)
 	if err != nil {
-		fmt.Printf("GetCouponByEmail err ,err=%v", err)
+		fmt.Printf("SubstanceCouponByEmail err ,err=%v", err)
 		return err
 	}
 	oldNum := ucm.Coupon
@@ -58,7 +69,7 @@ func (ucm *UserCapitalModel) SubstanceCouponByEmail(substanceNum int, email stri
 		err = errors.New("余额不足")
 		return err
 	}
-	var updateData map[string]int
+	updateData := make(map[string]int, 0)
 	updateData["coupon"] = curNum
 	return dbutil.RegistratorDBPool.Table(UserCapitalTableName).Update(updateData).Error
 }

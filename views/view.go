@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	"graduate_registrator/controllers"
 	"graduate_registrator/model"
 	"graduate_registrator/utils"
@@ -217,7 +218,7 @@ func Recharge(c *gin.Context) {
 type GetBuyEquipmentReq struct {
 	Email     string `form:"email" json:"email" binding:"required"`
 	CouponNum int    `form:"coupon_num" json:"coupon_num" binding:"required"`
-	WeaponId  int64  `form:"weapon_id" json:"weapon_id" binding:"required"`
+	WeaponId  int    `form:"weapon_id" json:"weapon_id" binding:"required"`
 }
 
 type GetBuyEquipmentRsp struct {
@@ -386,5 +387,79 @@ func GetWithoutEquipments(c *gin.Context) {
 		return
 	}
 	httputils.ResponseOk(c, data, "")
+	return
+}
+
+type GetBatchInsertEquipmentReq struct {
+}
+
+type GetBatchInsertEquipmentRsp struct {
+	Status      string `json:"status"`
+	Description string `json:"description"`
+	Data        string `json:"data"`
+}
+
+//获得已有装备信息
+func BatchInsertEquipment(c *gin.Context) {
+	req := &GetBatchInsertEquipmentReq{}
+	//rsp := GetValidateRsp{}
+	if err := c.Bind(req); err != nil {
+		fmt.Printf("%+v", req)
+		err := errors.New("invalid params")
+		//clog.Logger.Warning("LoginController failed to %v", err.Error())
+		fmt.Printf("GetWithoutEquipments failed to %v", err.Error())
+		httputils.ResponseError(c, "", err.Error())
+		return
+	}
+	//开启事务
+	usM := model.UserWeaponModel{}
+	ts := usM.GetDB().Begin()
+	commit := false
+	defer func() {
+		if commit {
+			ts.Commit()
+		} else {
+			ts.Rollback()
+		}
+	}()
+	//查询用户信息表，批量导入
+	userInfoList := model.UserInfoModelList{}
+	err := userInfoList.GetAllUsers()
+	if err != nil {
+		fmt.Printf("userInfoList.GetAllUsers() err [err=%v]", err)
+		err := errors.New("批量导入失败")
+		//clog.Logger.Warning("LoginController failed to %v", err.Error())
+		fmt.Printf("GetWithoutEquipments failed to %v", err.Error())
+		httputils.ResponseError(c, "", err.Error())
+		return
+	}
+	fmt.Printf("vip %+v", userInfoList)
+	userWeapon := model.UserWeaponModel{}
+	for _, userInfo := range userInfoList {
+		//查询user_weapon表是否有该账户，如果有则跳过
+		err = userWeapon.GetByEmail(userInfo.Email)
+		if err != nil && err != gorm.ErrRecordNotFound {
+			fmt.Printf("GetByEmail [err=%v]", err)
+			err := errors.New("批量导入失败")
+			//clog.Logger.Warning("LoginController failed to %v", err.Error())
+			fmt.Printf("GetWithoutEquipments failed to %v", err.Error())
+			httputils.ResponseError(c, "", err.Error())
+			return
+		} else if err != nil && err == gorm.ErrRecordNotFound {
+			//导入3条基础数据
+			//0，1，5
+			userWeapon.Create(userInfo.Email, 0)
+			userWeapon = model.UserWeaponModel{}
+			userWeapon.Create(userInfo.Email, 1)
+			userWeapon = model.UserWeaponModel{}
+			userWeapon.Create(userInfo.Email, 5)
+			userWeapon = model.UserWeaponModel{}
+		} else {
+			userWeapon = model.UserWeaponModel{}
+			continue
+		}
+	}
+	commit = true
+	httputils.ResponseOk(c, "", "")
 	return
 }

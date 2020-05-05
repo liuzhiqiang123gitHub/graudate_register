@@ -20,10 +20,14 @@ type UserWeaponModel struct {
 }
 type UserWeaponModelList []UserWeaponModel
 
+func (uWM *UserWeaponModel) GetDB() *gorm.DB {
+	return dbutil.RegistratorDBPool.Table(UserWeaponTableName)
+}
+
 //购买武器
-func (uWM *UserWeaponModel) BuyWeaponByEmail(couponNum int, weaponId int64, email string) error {
+func (uWM *UserWeaponModel) BuyWeaponByEmail(couponNum int, weaponId int, email string) error {
 	uWM.Email = email
-	uWM.Id = weaponId
+	uWM.WeaponId = weaponId
 	//点券扣减
 	uCM := UserCapitalModel{}
 	err := uCM.SubstanceCouponByEmail(couponNum, email)
@@ -32,15 +36,28 @@ func (uWM *UserWeaponModel) BuyWeaponByEmail(couponNum int, weaponId int64, emai
 		return err
 	}
 	//插入数据
-	return dbutil.RegistratorDBPool.Table(WeaponInfoTableName).Create(uWM).Error
+	return dbutil.RegistratorDBPool.Table(UserWeaponTableName).Create(uWM).Error
 }
 
 //查询拥有的装备
 func (uWML *UserWeaponModelList) GetEquipments(email string) error {
-	return dbutil.RegistratorDBPool.Table(WeaponInfoTableName).Where("email=?", email).Find(uWML).Error
+	return dbutil.RegistratorDBPool.Table(UserWeaponTableName).Where("email=?", email).Find(uWML).Error
 }
 
 //查询未拥有的
-func (uWML *UserWeaponModelList) GetWithoutEquipments(email string) error {
-	return dbutil.RegistratorDBPool.Table(WeaponInfoTableName).Where("email !=?", email).Find(uWML).Error
+func (uWML *WeaponModelList) GetWithoutEquipments(email string) error {
+	sql := "select b.* from user_weapon a right join weapon b on a.weapon_id=b.id where a.email != ?"
+	return dbutil.RegistratorDBPool.Table(UserWeaponTableName).Raw(sql, email).Find(uWML).Error
+}
+
+//查询一条记录
+func (uWM *UserWeaponModel) GetByEmail(email string) error {
+	return dbutil.RegistratorDBPool.Table(UserWeaponTableName).Where("email=?", email).First(uWM).Error
+}
+
+//插入一条记录
+func (uWM *UserWeaponModel) Create(email string, weaponId int) error {
+	uWM.Email = email
+	uWM.WeaponId = weaponId
+	return dbutil.RegistratorDBPool.Table(UserWeaponTableName).Create(uWM).Error
 }

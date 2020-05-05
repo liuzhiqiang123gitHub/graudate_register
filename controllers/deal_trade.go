@@ -14,7 +14,7 @@ func Recharge(rechargeNum int, email string) error {
 	}
 	return nil
 }
-func BuyEquipment(couponNum int, weaponId int64, email string) error {
+func BuyEquipment(couponNum int, weaponId int, email string) error {
 	uWM := model.UserWeaponModel{}
 	err := uWM.BuyWeaponByEmail(couponNum, weaponId, email)
 	if err != nil {
@@ -52,14 +52,14 @@ func GetEquipments(email string) (error, model.UserWeaponModelList) {
 	}
 	return nil, uWML
 }
-func GetWithoutEquipments(email string) (error, model.UserWeaponModelList) {
-	uWML := model.UserWeaponModelList{}
-	err := uWML.GetWithoutEquipments(email)
+func GetWithoutEquipments(email string) (error, model.WeaponModelList) {
+	wmL := model.WeaponModelList{}
+	err := wmL.GetWithoutEquipments(email)
 	if err != nil {
 		if err != nil {
 			fmt.Printf("获取未有的装备失败，err=%v", err)
-			return err, uWML
+			return err, wmL
 		}
 	}
-	return nil, uWML
+	return nil, wmL
 }
