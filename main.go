@@ -5,7 +5,7 @@ import (
 	"graduate_registrator/routers"
 	config "graduate_registrator/utils/conf"
 	"graduate_registrator/utils/dbutil"
-	"graduate_registrator/utils/etcd"
+	etcdIni "graduate_registrator/utils/etcd"
 	"graduate_registrator/utils/redisUtil"
 	"runtime"
 )
@@ -30,4 +30,5 @@ func main() {
 	//if res == "" && err != nil {
 	//	fmt.Println(err)
 	//}
+	//fmt.Print(63 & 1)
 }

@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="2a412e8f-b1ab-4274-ac67-1152575368ae" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/view.go" beforeDir="false" afterPath="$PROJECT_DIR$/views/view.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/routers.go" beforeDir="false" afterPath="$PROJECT_DIR$/routers/routers.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,13 +27,18 @@
   </component>
   <component name="ProjectId" id="1Z98FlWrWk9R5Z9ucAek8JCOSYI" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
+    <property name="go.vendoring.notification.had.been.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="watcher.settings" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -60,7 +66,7 @@
     </recent_temporary>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -84,33 +90,45 @@
     <proxy>https://mirrors.aliyun.com/goproxy/</proxy>
   </component>
   <component name="WindowStateProjectService">
-    <state x="733" y="347" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1588600144091">
+    <state x="733" y="347" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1588913497189">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="733" y="347" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1588600144091" />
-    <state width="1860" height="821" key="GridCell.Tab.0.bottom" timestamp="1588671483232">
+    <state x="733" y="347" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1588913497189" />
+    <state x="850" y="394" key="EnvironmentVariablesDialog" timestamp="1589094314357">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="821" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1588671483232" />
-    <state width="1860" height="821" key="GridCell.Tab.0.center" timestamp="1588671483232">
+    <state x="850" y="394" key="EnvironmentVariablesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1589094314357" />
+    <state x="744" y="289" key="FileChooserDialogImpl" timestamp="1589094271209">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="821" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1588671483232" />
-    <state width="1860" height="821" key="GridCell.Tab.0.left" timestamp="1588671483232">
+    <state x="744" y="289" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1589094271209" />
+    <state width="1860" height="268" key="GridCell.Tab.0.bottom" timestamp="1588997830729">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="821" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1588671483232" />
-    <state width="1860" height="821" key="GridCell.Tab.0.right" timestamp="1588671483232">
+    <state width="1860" height="268" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1588997830729" />
+    <state width="1860" height="268" key="GridCell.Tab.0.center" timestamp="1588997830729">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="821" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1588671483232" />
+    <state width="1860" height="268" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1588997830729" />
+    <state width="1860" height="268" key="GridCell.Tab.0.left" timestamp="1588997830729">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1860" height="268" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1588997830729" />
+    <state width="1860" height="268" key="GridCell.Tab.0.right" timestamp="1588997830729">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1860" height="268" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1588997830729" />
+    <state x="569" y="203" key="SettingsEditor" timestamp="1589000059340">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="569" y="203" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1589000059340" />
     <state x="698" y="255" width="596" height="532" key="find.popup" timestamp="1588668432233">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="698" y="255" width="596" height="532" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1588668432233" />
-    <state x="669" y="256" width="672" height="678" key="search.everywhere.popup" timestamp="1588599607984">
+    <state x="669" y="256" width="672" height="678" key="search.everywhere.popup" timestamp="1588688502167">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="669" y="256" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1588599607984" />
+    <state x="669" y="256" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1588688502167" />
   </component>
 </project>
