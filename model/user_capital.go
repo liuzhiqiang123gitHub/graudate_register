@@ -51,7 +51,7 @@ func (ucm *UserCapitalModel) RechargeByEmail(rechargeNum int, email string) (err
 	oldNum := ucm.Coupon
 	updateData := make(map[string]int, 0)
 	updateData["coupon"] = oldNum + rechargeNum
-	return dbutil.RegistratorDBPool.Table(UserCapitalTableName).Update(updateData).Error
+	return dbutil.RegistratorDBPool.Table(UserCapitalTableName).Where("email=?", email).Update(updateData).Error
 }
 
 //点券扣减

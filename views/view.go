@@ -451,7 +451,7 @@ func BatchInsertEquipment(c *gin.Context) {
 			userWeapon = model.UserWeaponModel{}
 			userWeapon.Create(userInfo.Email, 2)
 			userWeapon = model.UserWeaponModel{}
-			userWeapon.Create(userInfo.Email, 5)
+			userWeapon.Create(userInfo.Email, 6)
 			userWeapon = model.UserWeaponModel{}
 		} else {
 			userWeapon = model.UserWeaponModel{}
