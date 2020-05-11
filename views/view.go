@@ -447,9 +447,9 @@ func BatchInsertEquipment(c *gin.Context) {
 		} else if err != nil && err == gorm.ErrRecordNotFound {
 			//导入3条基础数据
 			//0，1，5
-			userWeapon.Create(userInfo.Email, 0)
-			userWeapon = model.UserWeaponModel{}
 			userWeapon.Create(userInfo.Email, 1)
+			userWeapon = model.UserWeaponModel{}
+			userWeapon.Create(userInfo.Email, 2)
 			userWeapon = model.UserWeaponModel{}
 			userWeapon.Create(userInfo.Email, 5)
 			userWeapon = model.UserWeaponModel{}
