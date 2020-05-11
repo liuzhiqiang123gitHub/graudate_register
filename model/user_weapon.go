@@ -1,6 +1,7 @@
 package model
 
 import (
+	"errors"
 	"fmt"
 	"github.com/jinzhu/gorm"
 	"graduate_registrator/utils/dbutil"
@@ -26,11 +27,22 @@ func (uWM *UserWeaponModel) GetDB() *gorm.DB {
 
 //购买武器
 func (uWM *UserWeaponModel) BuyWeaponByEmail(couponNum int, weaponId int, email string) error {
+	//查询该装备是否存在
+	err := uWM.GetByEmailAndWeaponId(email, weaponId)
+	if err != nil && err != gorm.ErrRecordNotFound {
+		fmt.Printf("系统开小差了，请稍后再试,err=%v", err)
+		err = errors.New("系统开小差了，请稍后再试")
+		return err
+	} else if err == nil {
+		fmt.Printf("装备已存在")
+		err = errors.New("装备已存在")
+		return err
+	}
 	uWM.Email = email
 	uWM.WeaponId = weaponId
 	//点券扣减
 	uCM := UserCapitalModel{}
-	err := uCM.SubstanceCouponByEmail(couponNum, email)
+	err = uCM.SubstanceCouponByEmail(couponNum, email)
 	if err != nil {
 		fmt.Printf(" uCM.SubstanceCouponByEmail err ,err= %v", err)
 		return err
@@ -60,4 +72,11 @@ func (uWM *UserWeaponModel) Create(email string, weaponId int) error {
 	uWM.Email = email
 	uWM.WeaponId = weaponId
 	return dbutil.RegistratorDBPool.Table(UserWeaponTableName).Create(uWM).Error
+}
+
+//根据email和weapon id查询
+func (uWM *UserWeaponModel) GetByEmailAndWeaponId(email string, weaponId int) error {
+	uWM.Email = email
+	uWM.WeaponId = weaponId
+	return dbutil.RegistratorDBPool.Table(UserWeaponTableName).Where("email=? and weapon_id=?", email, weaponId).First(uWM).Error
 }

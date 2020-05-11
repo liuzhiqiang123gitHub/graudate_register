@@ -241,7 +241,6 @@ func BuyEquipment(c *gin.Context) {
 	fmt.Printf("BuyEquipment req=%v ", req)
 	err := controllers.BuyEquipment(req.CouponNum, req.WeaponId, req.Email)
 	if err != nil {
-		err := errors.New("购买失败，请稍后重试")
 		//clog.Logger.Warning("LoginController failed to %v", err.Error())
 		fmt.Printf("BuyEquipment failed to %v", err.Error())
 		httputils.ResponseError(c, "", err.Error())
