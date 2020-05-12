@@ -23,6 +23,8 @@ type UserCapitalModel struct {
 func (ucm *UserCapitalModel) GetDb() *gorm.DB {
 	return dbutil.RegistratorDBPool.Table(UserCapitalTableName)
 }
+
+//开户
 func (ucm *UserCapitalModel) Create(rechargeNum int, email string) error {
 	ucm.Email = email
 	ucm.Coupon = rechargeNum
@@ -42,11 +44,11 @@ func (ucm *UserCapitalModel) RechargeByEmail(rechargeNum int, email string) (err
 		fmt.Printf("GetCouponByEmail err ,err=%v", err)
 		return err
 	} else if err != nil && err == gorm.ErrRecordNotFound {
-		err = ucm.Create(rechargeNum, email)
-		if err != nil {
-			fmt.Printf("RechargeByEmail [err=%v]", err)
-			return err
-		}
+		//err = ucm.Create(rechargeNum, email)
+		//if err != nil {
+		//	fmt.Printf("RechargeByEmail [err=%v]", err)
+		//	return err
+		//}
 	}
 	oldNum := ucm.Coupon
 	updateData := make(map[string]int, 0)
@@ -71,5 +73,5 @@ func (ucm *UserCapitalModel) SubstanceCouponByEmail(substanceNum int, email stri
 	}
 	updateData := make(map[string]int, 0)
 	updateData["coupon"] = curNum
-	return dbutil.RegistratorDBPool.Table(UserCapitalTableName).Update(updateData).Error
+	return dbutil.RegistratorDBPool.Table(UserCapitalTableName).Where("email=?", email).Update(updateData).Error
 }

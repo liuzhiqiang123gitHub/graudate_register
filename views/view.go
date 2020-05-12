@@ -10,6 +10,7 @@ import (
 	"graduate_registrator/utils"
 	"graduate_registrator/utils/email"
 	"graduate_registrator/utils/httputils"
+	"graduate_registrator/utils/kafkautil"
 	"graduate_registrator/utils/redisUtil"
 )
 
@@ -89,6 +90,8 @@ func UserRegistrator(c *gin.Context) {
 		httputils.ResponseError(c, "", err.Error())
 		return
 	}
+	//kafka异步初始化账户信息，装备信息
+	kafkautil.ProduceMsg(req.Email)
 	httputils.ResponseOk(c, "", "")
 	return
 
@@ -461,4 +464,33 @@ func BatchInsertEquipment(c *gin.Context) {
 	commit = true
 	httputils.ResponseOk(c, "", "")
 	return
+}
+
+type KafkaProduceReq struct {
+	Email string `form:"email" json:"email"`
+}
+
+type KafkaProduceReqRsp struct {
+	Status      string `json:"status"`
+	Description string `json:"description"`
+	Data        string `json:"data"`
+}
+
+func KafkaProduce(c *gin.Context) {
+	req := &KafkaProduceReq{}
+	//rsp := GetValidateRsp{}
+	if err := c.Bind(req); err != nil {
+		fmt.Printf("%+v", req)
+		err := errors.New("invalid params")
+		//clog.Logger.Warning("LoginController failed to %v", err.Error())
+		fmt.Printf("GetPasswordByEmail failed to %v", err.Error())
+		httputils.ResponseError(c, "", err.Error())
+		return
+	}
+	go kafkautil.ProduceMsg(req.Email)
+	//if err != nil {
+	//	httputils.ResponseError(c, "", err.Error())
+	//	return
+	//}
+	httputils.ResponseOk(c, "", "")
 }

@@ -6,8 +6,10 @@ import (
 	config "graduate_registrator/utils/conf"
 	"graduate_registrator/utils/dbutil"
 	etcdIni "graduate_registrator/utils/etcd"
+	"graduate_registrator/utils/kafkautil"
 	"graduate_registrator/utils/redisUtil"
 	"runtime"
+	"time"
 )
 
 func main() {
@@ -25,7 +27,15 @@ func main() {
 		fmt.Println(err)
 		return
 	}
+	//连接kakfa
+	go kafkautil.InitConsumer()
+	go kafkautil.InitProducer()
+	time.Sleep(time.Second)
+	if kafkautil.G_Consumer != nil && kafkautil.G_SyncProducer != nil {
+		go kafkautil.ConsumeMsg()
+	}
 	routers.StartHttpServer(9370)
+
 	//res, err := redisUtil.Get("123")
 	//if res == "" && err != nil {
 	//	fmt.Println(err)

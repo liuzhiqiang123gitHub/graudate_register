@@ -38,6 +38,12 @@ func StartHttpServer(port int) {
 		//脚本，批量刷装备信息.注册时就有四样基础装备
 		financial.POST("/batch_insert_equipments", views.BatchInsertEquipment)
 	}
+	kafka := router.Group("/v2/kafka")
+	{
+		//生产
+		kafka.GET("/kafka_produce", views.KafkaProduce)
+
+	}
 	err := router.Run(fmt.Sprintf("%s:%d", "0.0.0.0", port))
 	fmt.Println(err)
 }
