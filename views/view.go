@@ -159,10 +159,22 @@ func GetValidateCode(c *gin.Context) {
 		err := errors.New("邮箱不合法")
 		httputils.ResponseError(c, "", err.Error())
 	}
+	//验证邮箱是否被注册
+	user := model.UserInfoModel{}
+	err := user.GetUserByEmail(req.Mail)
+	if err != nil && err != gorm.ErrRecordNotFound {
+		fmt.Println("数据库异常")
+		err := errors.New("数据库异常")
+		httputils.ResponseError(c, "", err.Error())
+	} else if err != nil && err == gorm.ErrRecordNotFound {
+		fmt.Println("用户未注册")
+		err := errors.New("用户未注册")
+		httputils.ResponseError(c, "", err.Error())
+	}
 	strCode := utils.GenValidateCode(6)
 	//向该用户发送邮件
 	body := fmt.Sprintf("您的验证码为:%s,5分钟之后过期,如不是本人操作请忽略。", strCode)
-	err := email.StartSendEmail(req.Mail, "字节飞舞计算机系统有限公司", body)
+	err = email.StartSendEmail(req.Mail, "字节飞舞计算机系统有限公司", body)
 	if err != nil {
 		fmt.Printf("发送邮件失败%s", req.Mail)
 		return
