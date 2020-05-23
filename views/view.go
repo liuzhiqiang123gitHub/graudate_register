@@ -158,6 +158,7 @@ func GetValidateCode(c *gin.Context) {
 		fmt.Println("邮箱不合法")
 		err := errors.New("邮箱不合法")
 		httputils.ResponseError(c, "", err.Error())
+		return
 	}
 	//验证邮箱是否被注册
 	user := model.UserInfoModel{}
@@ -166,10 +167,12 @@ func GetValidateCode(c *gin.Context) {
 		fmt.Println("数据库异常")
 		err := errors.New("数据库异常")
 		httputils.ResponseError(c, "", err.Error())
+		return
 	} else if err != nil && err == gorm.ErrRecordNotFound {
 		fmt.Println("用户未注册")
 		err := errors.New("用户未注册")
 		httputils.ResponseError(c, "", err.Error())
+		return
 	}
 	strCode := utils.GenValidateCode(6)
 	//向该用户发送邮件
@@ -184,6 +187,7 @@ func GetValidateCode(c *gin.Context) {
 	if err != nil {
 		fmt.Println("删除key失败")
 		httputils.ResponseError(c, "", err.Error())
+		return
 	}
 	var value = fmt.Sprintf("%s_%s", req.Mail, strCode)
 	err = redisUtil.Set(req.Mail, value, 300)

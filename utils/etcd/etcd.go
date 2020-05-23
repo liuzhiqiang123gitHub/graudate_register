@@ -3,6 +3,7 @@ package etcdIni
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/coreos/etcd/clientv3"
 	config "graduate_registrator/utils/conf"
 	"time"
@@ -21,6 +22,10 @@ func InitEtcd() {
 	kv := clientv3.NewKV(client)
 	ctx, _ := context.WithTimeout(context.Background(), 3*time.Second)
 	getRsp, err := kv.Get(ctx, "/zhiqiang/login_service/config", clientv3.WithPrefix())
+	if err != nil {
+		fmt.Printf("etcd err = %v", err)
+		return
+	}
 	for _, v := range getRsp.Kvs {
 		//fmt.Printf("你疯了吗%+v", string(v.Value))
 		json.Unmarshal(v.Value, &config.Conf)
